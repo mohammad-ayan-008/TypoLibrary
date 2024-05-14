@@ -61,7 +61,7 @@ This is a lightweight HTTP server framework for handling web requests and respon
 
    ```java
    import org.mainframe.Typo.Annotations.web.*;
-
+   @Host
    public class App {
 
        @GetMapping("/api/")
