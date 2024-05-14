@@ -23,8 +23,8 @@ This is a lightweight HTTP server framework for handling web requests and respon
    or
    implementation fileTree(dir: 'libs', include: ['*.jar'])
    ```
-
-   ``` files tree
+   **File Tree**
+   ```
      ├── build.gradle
      ├── libs
      │   └── HttpJavaServer.jar
@@ -118,6 +118,32 @@ public class App {
         System.out.println(emp.toString());
     }
 }
+```
+##Output 
+```
+Run tasks : [:app:run]
+> Task :app:compileJava
+> Task :app:processResources NO-SOURCE
+> Task :app:classes
+
+> Task :app:run
+ _____  __   __  ____     ___  
+|_   _| \ \ / / |  _ \   / _ \ 
+  | |    \ V /  | |_) | | | | |
+  | |     | |   |  __/  | |_| |
+  |_|     |_|   |_|      \___/ 
+
+ Warning :- Same methods  but  with diffrent Request Type wont work Its a bug 
+
+
+ 
+ Available Routes
+http://localhost:8080/api/post RequestType GET
+http://localhost:8080/api/vi RequestType GET
+http://localhost:8080/api/post/data RequestType POST
+http://localhost:8080/api/data RequestType GET
+
+
 ```
 
 ## Contributing
