@@ -20,9 +20,32 @@ This is a lightweight HTTP server framework for handling web requests and respon
 
    ```groovy
    implementation files('libs/typos-http-server.jar')
+   or
+   implementation fileTree(dir: 'libs', include: ['*.jar'])
    ```
 
-2. **Initializing the Server:**
+   ``` files tree
+     ├── build.gradle
+     ├── libs
+     │   └── HttpJavaServer.jar
+     └── src
+     ├── main
+     │   ├── java
+     │   │   └── org
+     │   │       └── example
+     │   │           ├── App.java
+     │   │           └── Employee.java
+     │   └── resources
+     └── test
+         ├── java
+         │   └── org
+         │       └── example
+         │           └── AppTest.java
+         └── resources
+   ```
+   
+
+3. **Initializing the Server:**
 
    Initialize the Typos HTTP Server in your `main` method:
 
@@ -32,7 +55,7 @@ This is a lightweight HTTP server framework for handling web requests and respon
    }
    ```
 
-3. **Defining Endpoints:**
+4. **Defining Endpoints:**
 
    Define your API endpoints within your `App` class using annotations:
 
@@ -53,17 +76,17 @@ This is a lightweight HTTP server framework for handling web requests and respon
    }
    ```
 
-4. **Accessing Endpoints:**
+5. **Accessing Endpoints:**
 
    - To handle GET requests, annotate a method with `@GetMapping` and specify the endpoint path.
    - To handle POST requests, annotate a method with `@PostMapping` and specify the endpoint path.
 
-5. **Request Handling:**
+6. **Request Handling:**
 
    - For GET requests, the method should return the desired response object.
    - For POST requests, the method should accept parameters as defined by your application's needs.
 
-6. **Running the Server:**
+7. **Running the Server:**
 
    Compile and run your application. The server will start listening for incoming HTTP requests on port 8080 by default.
 
