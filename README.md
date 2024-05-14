@@ -8,7 +8,7 @@ This is a lightweight HTTP server framework for handling web requests and respon
 
 ## Features
 
-- **Annotation-Based Routing:** Easily map HTTP requests to Java methods using annotations like `@GetMapping` and `@PostMapping`.
+**Annotation-Based Routing:*** Easily map HTTP requests to Java methods using the ***@RequestMapping*** annotation.
 - **Automatic JSON Serialization/Deserialization:** Convert Java objects to JSON and vice versa with ease.
 - **Simple Configuration:** Initialize the server with just a few lines of code.
 
@@ -61,34 +61,35 @@ This is a lightweight HTTP server framework for handling web requests and respon
 
    ```java
    import org.mainframe.Typo.Annotations.web.*;
+   import java.util.*;
+
    @Host
-   public class App {
+   public class Myclass {
 
-       @GetMapping("/api/")
-       public Map<String, String> getData() {
-           // Your code here
-       }
+      @RequestMapping(value = "/api/post", type = RequestType.GET)
+      public Map<String, String> Test() {
+          // Your code here
+      }
 
-       @PostMapping("/api/")
-       public void post(String response) {
-           // Your code here
-       }
-   }
+      @RequestMapping(value = "/api/vi", type = RequestType.GET)
+      public Map<String, String> Test2() {
+        // Your code here
+      }
+
+      @RequestMapping(value = "/api/post/data", type = RequestType.POST)
+      public void Response(String response) {
+        // Your code here
+      }
+    }
    ```
 
-5. **Accessing Endpoints:**
 
-   - To handle GET requests, annotate a method with `@GetMapping` and specify the endpoint path.
-   - To handle POST requests, annotate a method with `@PostMapping` and specify the endpoint path.
+5. **Request Handling:**
+Accessing Endpoints:Annotate methods with @RequestMapping.Specify the endpoint path and request type using the value and type attributes, respectively.Request Handling:For GET requests, the method should return the desired response object.For POST requests, the method should accept parameters as defined by your application's needs.
 
-6. **Request Handling:**
+6. **Running the Server:**
 
-   - For GET requests, the method should return the desired response object.
-   - For POST requests, the method should accept parameters as defined by your application's needs.
-
-7. **Running the Server:**
-
-   Compile and run your application. The server will start listening for incoming HTTP requests on port 8080 by default.
+   Compile and run your application. The server will start listening for incoming HTTP requests on port That you provide in TypoRunner.run(class,Port)
 
 ## Example
 
