@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import com.google.gson.Gson;
 import org.mainframe.Typo.Annotations.Host;
 import org.mainframe.Typo.Annotations.InitTypo;
+import org.mainframe.Typo.Annotations.JSON.JSONCOMPONENT;
 import org.mainframe.Typo.Annotations.web.PostMapping;
 import org.mainframe.Typo.Annotations.web.RequestMapping;
 import org.mainframe.Typo.Server.HttpServer;
@@ -22,16 +23,15 @@ public class TyposRunner {
     
     private static List<Class<?>> list;
     private static Map<Class,List<Method>> map;
+    private static Optional<String> value;
     private static HttpServerV2 server;
     public static void run(Class clss,int port) {
+         value = getAnnotationValue(clss);
          list = filterClassesWithAnnotations(clss);
          map=getAllAnnotatedMethods(list).get();
          server = new HttpServerV2(map,port);
-        
+        // server.setClassesAnnotatedWithJSONCOMPONENT(getAllClassesAnnotatedWithJSONCOMPONENT());
     }
-    
-    
-    
 
     private static Optional<String> getAnnotationValue(Class clss) {
         if (clss.isAnnotationPresent(InitTypo.class)) {
@@ -41,6 +41,19 @@ public class TyposRunner {
         System.out.println("InitTypo Annotation is Missing");
         return Optional.fromNullable(null);
     }
+//
+//    private static List<Class<?>> getAllClassesAnnotatedWithJSONCOMPONENT(){
+//        if (value.isPresent()) {
+//            var classes = getAllClasses(value.get()).stream().filter(TyposRunner::isAnnotatedWithJSONCOMPONENT).toList();
+//            return classes;
+//        }
+//        System.out.println("No Json Component Found");
+//        return null;
+//    }
+
+//    private static  boolean isAnnotatedWithJSONCOMPONENT(Class<?> c){
+//        return c.isAnnotationPresent(JSONCOMPONENT.class);
+//    }
 
     private static Set<Class<?>> getAllClasses(String pkg) {
         Reflections ref = new Reflections(pkg, new SubTypesScanner(false));
@@ -49,7 +62,7 @@ public class TyposRunner {
     }
 
     private static List<Class<?>> filterClassesWithAnnotations(Class clss) {
-        Optional<String> value = getAnnotationValue(clss);
+
         if (value.isPresent()) {
             String val = value.get();
             Set<Class<?>> list = getAllClasses(val);

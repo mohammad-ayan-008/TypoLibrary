@@ -4,6 +4,7 @@ import java.util.*;
 import org.mainframe.Typo.Annotations.RequestType;
 import org.mainframe.Typo.Annotations.web.*;
 import org.mainframe.Typo.Annotations.web.RequestMapping;
+import org.mainframe.Typo.Server.Enployee;
 
 @Host
 public class Myclass {
@@ -26,8 +27,8 @@ public class Myclass {
     }
     
     @RequestMapping(value = "/api/post/data",type=RequestType.POST)
-    public void Response(String response){
-        System.out.println(response);
+    public void Response(Enployee response){
+        System.out.println(response.toString());
     }
 }
 

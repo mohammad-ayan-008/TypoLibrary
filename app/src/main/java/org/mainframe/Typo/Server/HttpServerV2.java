@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import java.lang.reflect.Method;
 import java.io.*;
+import java.lang.reflect.Parameter;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +20,14 @@ import java.nio.charset.StandardCharsets;
 import org.mainframe.Typo.Annotations.RequestType;
 import org.mainframe.Typo.Annotations.web.RequestMapping;
 import org.mainframe.Typo.Server.HttpServerV2;
+import org.mainframe.Typo.TyposRunner;
 
 public class HttpServerV2 {
     private HttpServer server;
     private int PORT=8080;
     private Gson gson;
-    
+//    private List<Class<?>> ClassesAnnotatedWithJSONCOMPONENT;
+
     private ExecutorService exeService;
     public HttpServerV2(Map<Class,List<Method>> map,int port){
         gson = new Gson();
@@ -50,12 +53,12 @@ public class HttpServerV2 {
          server.setExecutor(exeService);
          System.out.println("\n \n Available Routes");
          routes.forEach(rt->{
-            System.out.println("http://localhost:"+port+rt);   
-         });           
-         server.start();  
+            System.out.println("http://localhost:"+port+rt);
+         });
+         server.start();
        }catch(Exception e){
            e.printStackTrace();
-       }  
+       }
     }
     
     
@@ -76,9 +79,7 @@ public class HttpServerV2 {
             gson= new Gson();
             this.type=type;
         }
-        
-        
-    
+
         @Override
         public void handle(HttpExchange arg0) throws IOException {
             System.out.println("TypeNamw"+type.name()+arg0.getRequestMethod());    
@@ -95,10 +96,7 @@ public class HttpServerV2 {
         
         
     }
-    
-    
-    
-    
+
     public void handleGet(HttpExchange arg0,Method m,Gson gson,Class clzz){
          
               try{
@@ -127,8 +125,10 @@ public class HttpServerV2 {
               while((line=br.readLine())!=null){
                   builder.append(line);
               }
-              br.close(); 
-              m.invoke(clzz.getConstructor().newInstance(),builder.toString());
+              br.close();
+              Class parm =m.getParameters()[0].getType();
+              Object C=TyposRunner.toclass(builder.toString(),parm);
+              m.invoke(clzz.getConstructor().newInstance(),C);
               String response ="{\"status\":\"Ok\"}";
               arg0.sendResponseHeaders(200,response.getBytes().length);
               OutputStream op = arg0.getResponseBody();
@@ -139,7 +139,16 @@ public class HttpServerV2 {
               e.printStackTrace();
            }
     }
-    
-     
-    
+
+//
+//    public List<Class<?>> getClassesAnnotatedWithJSONCOMPONENT() {
+//        return ClassesAnnotatedWithJSONCOMPONENT;
+//    }
+//
+//    public void setClassesAnnotatedWithJSONCOMPONENT(List<Class<?>> classesAnnotatedWithJSONCOMPONENT) {
+//        ClassesAnnotatedWithJSONCOMPONENT = classesAnnotatedWithJSONCOMPONENT;
+//    }
+
+
+
 }
