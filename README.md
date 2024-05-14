@@ -91,32 +91,19 @@ Accessing Endpoints:Annotate methods with @RequestMapping.Specify the endpoint p
 
    Compile and run your application. The server will start listening for incoming HTTP requests on port That you provide in TypoRunner.run(class,Port)
 
-## Example
+## Initialize using Main Class
 
 ```java
 import org.mainframe.Typo.Annotations.web.*;
 import org.mainframe.Typo.TyposRunner;
 import java.util.*;
 
-@Host
+
 @InitTypo("org.example")
 public class App {
 
     public static void main(String[] args) {
         TyposRunner.run(App.class, 8080);
-    }
-
-    @GetMapping("/api/")
-    public Map<String, String> getData() {
-        Map<String, String> map = new HashMap<>();
-        map.put("Status", "Ok");
-        return map;
-    }
-
-    @PostMapping("/api/")
-    public void post(String response) {
-        Employee emp = TyposRunner.toclass(response, Employee.class);
-        System.out.println(emp.toString());
     }
 }
 ```
