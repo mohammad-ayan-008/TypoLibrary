@@ -1,0 +1,65 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/Spring-Boot/PersonalProject/app/src/main/java/org/mainframe/HttpServer.java",
+      "selection": {
+        "end": {
+          "column": 7,
+          "index": 392,
+          "line": 13
+        },
+        "start": {
+          "column": 7,
+          "index": 392,
+          "line": 13
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/Spring-Boot/PersonalProject/app/src/main/java/org/mainframe/Typo/Server/HttpServerV2.java",
+      "selection": {
+        "end": {
+          "column": 44,
+          "index": 3248,
+          "line": 85
+        },
+        "start": {
+          "column": 44,
+          "index": 3248,
+          "line": 85
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/Spring-Boot/PersonalProject/app/src/main/java/org/mainframe/Myclass.java",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/Spring-Boot/PersonalProject/app/src/main/java/org/mainframe/Typo/Server/myclass2.java",
+      "selection": {
+        "end": {
+          "column": 16,
+          "index": 433,
+          "line": 11
+        },
+        "start": {
+          "column": 16,
+          "index": 433,
+          "line": 11
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/Spring-Boot/PersonalProject/app/src/main/java/org/mainframe/HttpServer.java"
+}
