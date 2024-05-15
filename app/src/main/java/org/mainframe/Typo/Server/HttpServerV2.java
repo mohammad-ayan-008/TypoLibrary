@@ -1,6 +1,6 @@
 package org.mainframe.Typo.Server;
 import com.google.common.reflect.TypeToken;
-import com.google.errorprone.annotations.Var;
+
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
