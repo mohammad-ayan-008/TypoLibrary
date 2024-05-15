@@ -1,4 +1,5 @@
 package org.mainframe.Typo.Server;
+import com.google.common.reflect.TypeToken;
 import com.google.errorprone.annotations.Var;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
@@ -7,6 +8,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.lang.reflect.Method;
 import java.io.*;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,10 +29,12 @@ public class HttpServerV2 {
     private int PORT=8080;
     private Gson gson;
 //    private List<Class<?>> ClassesAnnotatedWithJSONCOMPONENT;
+    private Map<Class<?>,Object> Classinstance;
 
     private ExecutorService exeService;
     public HttpServerV2(Map<Class,List<Method>> map,int port){
         gson = new Gson();
+        Classinstance = new HashMap<>();
         try{
          exeService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
          server = HttpServer.create(new InetSocketAddress(port),1);
@@ -44,10 +48,13 @@ public class HttpServerV2 {
                
          List<String> routes= new ArrayList<>();
          map.forEach((clazz,met)->{
+             try {
+                 Classinstance.put(clazz, clazz.newInstance());
+             }catch (Exception e){e.printStackTrace();}
              met.forEach(method->{
              RequestMapping annotation = method.getAnnotation(RequestMapping.class);  
                   routes.add(annotation.value()+" RequestType "+annotation.type().name());        
-                  server.createContext(annotation.value(),new RequestHolder(method,clazz,annotation.type()));
+                  server.createContext(annotation.value(),new RequestHolder(method,annotation.type()));
             });
          });
          server.setExecutor(exeService);
@@ -69,52 +76,64 @@ public class HttpServerV2 {
     
     public class RequestHolder implements HttpHandler{
         private Method m;
-        private Class<?> clzz;
+
         private Gson gson;
         private RequestType type;
         
-        public RequestHolder(Method m, Class<?> clzz,RequestType type) {
+        public RequestHolder(Method m,RequestType type) {
             this.m = m;
-            this.clzz = clzz;
             gson= new Gson();
             this.type=type;
         }
 
         @Override
         public void handle(HttpExchange arg0) throws IOException {
-            System.out.println("TypeNamw"+type.name()+arg0.getRequestMethod());    
-           if("GET".equals(arg0.getRequestMethod())){
-                handleGet(arg0,m,gson,clzz);
-           }else if("POST".equalsIgnoreCase(arg0.getRequestMethod())){
-                if(type.name().equals("POST")){
-                  handlePost(arg0,m,gson,clzz);
-                }    
-           }
-            
-        }
-        
-        
-        
-    }
+            System.out.println("TypeNamw"+type.name()+arg0.getRequestMethod());
+            if (Classinstance.get(m.getDeclaringClass())==null){
+                System.out.println(m.getClass());
+                System.out.println("error");
+                return;
+            }
+            if("GET".equals(arg0.getRequestMethod())){
+                   handleGet(arg0,m,gson,Classinstance.get(m.getDeclaringClass()));
+            }else if("POST".equalsIgnoreCase(arg0.getRequestMethod())){
+                 if(type.name().equals("POST")){
+                   handlePost(arg0,m,gson,Classinstance.get(m.getDeclaringClass()));
+                 }
+            }
+         }
+     }
 
-    public void handleGet(HttpExchange arg0,Method m,Gson gson,Class clzz){
-         
+
+    public void handleGet(HttpExchange arg0,Method m,Gson gson,Object clzz){
+
               try{
-                 Map data = (Map)m.invoke(clzz.newInstance());
-                 byte[] data2 = gson.toJson(data).getBytes();
-                 arg0.sendResponseHeaders(200,data2.length);
-                 OutputStream os = arg0.getResponseBody();
-                 var bos= new BufferedOutputStream(os);
-                 bos.write(data2);
-                 bos.flush();
-                 bos.close();  
+                 Object data = m.invoke(clzz);
+                 if(data instanceof List lst){
+                     Type type = new TypeToken<List<?>>(){}.getType();
+                     byte[] data2 = gson.toJson(data,type).getBytes();
+                     arg0.sendResponseHeaders(200, data2.length);
+                     OutputStream os = arg0.getResponseBody();
+                     var bos = new BufferedOutputStream(os);
+                     bos.write(data2);
+                     bos.flush();
+                     bos.close();
+                 }else if(data instanceof Map){
+                     byte[] data2 = gson.toJson(data).getBytes();
+                     arg0.sendResponseHeaders(200, data2.length);
+                     OutputStream os = arg0.getResponseBody();
+                     var bos = new BufferedOutputStream(os);
+                     bos.write(data2);
+                     bos.flush();
+                     bos.close();
+                 }
               }catch(Exception e){
                   e.printStackTrace();
               }
             
     }
     
-    public void handlePost(HttpExchange arg0,Method m,Gson gson,Class clzz){
+    public void handlePost(HttpExchange arg0,Method m,Gson gson,Object clzz){
       try{
         var reader = 
                 new InputStreamReader(
@@ -127,14 +146,25 @@ public class HttpServerV2 {
               }
               br.close();
               Class parm =m.getParameters()[0].getType();
-              Object C=TyposRunner.toclass(builder.toString(),parm);
-              m.invoke(clzz.getConstructor().newInstance(),C);
-              String response ="{\"status\":\"Ok\"}";
-              arg0.sendResponseHeaders(200,response.getBytes().length);
-              OutputStream op = arg0.getResponseBody();
-              op.write(response.getBytes());
-              op.flush();
-              op.close();         
+              if (parm == String.class){
+                  Object C = line.toString();
+                  m.invoke(clzz, C);
+                  String response = "{\"status\":\"Ok\"}";
+                  arg0.sendResponseHeaders(200, response.getBytes().length);
+                  OutputStream op = arg0.getResponseBody();
+                  op.write(response.getBytes());
+                  op.flush();
+                  op.close();
+              }else {
+                  Object C = TyposRunner.toclass(builder.toString(), parm);
+                  m.invoke(clzz, C);
+                  String response = "{\"status\":\"Ok\"}";
+                  arg0.sendResponseHeaders(200, response.getBytes().length);
+                  OutputStream op = arg0.getResponseBody();
+                  op.write(response.getBytes());
+                  op.flush();
+                  op.close();
+              }
             }catch(Exception e){
               e.printStackTrace();
            }

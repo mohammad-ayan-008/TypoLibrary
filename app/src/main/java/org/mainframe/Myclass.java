@@ -8,27 +8,25 @@ import org.mainframe.Typo.Server.Enployee;
 
 @Host
 public class Myclass {
-  
-    @RequestMapping(value = "/api/post",type=RequestType.GET)
-    public Map<String,String> Test(){
-        Map<String,String> map = new HashMap<>();
-        map.put("Date",new Date().toLocaleString());
-        System.out.println(map);
-        return map;
-    }
-    
+
+    public  List<Enployee> data= new ArrayList<>();
+
+
     @RequestMapping(value = "/api/vi",type=RequestType.GET)
-    public Map<String,String> Test2(){
-        Map<String,String> map = new HashMap<>();
-        map.put("Date",new Date().toLocaleString());
-        map.put("Air pressure","10000");
-        System.out.println(map);
-        return map;
+    public List<Enployee> Test2(){
+        return this.data;
     }
-    
+    @RequestMapping(value = "/api/vi/size",type=RequestType.GET)
+    public Map<String,String> getSize(){
+        Map<String,String> sets = new HashMap<>();
+        sets.put("Size of Data",""+data.size());
+        return sets;
+    }
+
     @RequestMapping(value = "/api/post/data",type=RequestType.POST)
     public void Response(Enployee response){
-        System.out.println(response.toString());
+        data.add(response);
     }
+
 }
 
