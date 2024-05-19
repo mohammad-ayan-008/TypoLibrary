@@ -34,14 +34,12 @@ public class TyposRunner {
     @InjectVal("server.port")
     public static int PORT=8080;
     public static void run(Class clss) {
-         
+         setValueFromXml(clss);
          value = getAnnotationValue(clss);
          list = filterClassesWithAnnotations(clss);
          map=getAllAnnotatedMethods(list).get();
          server = new HttpServerV2(map,PORT);
          server.setVal(Classinstance);
-         setValueFromXml(clss);
-         
         // server.setClassesAnnotatedWithJSONCOMPONENT(getAllClassesAnnotatedWithJSONCOMPONENT());
     }
 

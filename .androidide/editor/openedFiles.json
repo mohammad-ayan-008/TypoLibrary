@@ -1,17 +1,32 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Typo/JInjector/InjectVal.java",
+      "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Typo/Server/HttpServerV2.java",
       "selection": {
         "end": {
-          "column": 20,
-          "index": 268,
-          "line": 9
+          "column": 0,
+          "index": 0,
+          "line": 0
         },
         "start": {
-          "column": 20,
-          "index": 268,
-          "line": 9
+          "column": 0,
+          "index": 0,
+          "line": 0
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Typo/TyposRunner.java",
+      "selection": {
+        "end": {
+          "column": 22,
+          "index": 1169,
+          "line": 33
+        },
+        "start": {
+          "column": 22,
+          "index": 1169,
+          "line": 33
         }
       }
     },
@@ -19,14 +34,14 @@
       "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/resources/Config.properties",
       "selection": {
         "end": {
-          "column": 18,
-          "index": 35,
-          "line": 1
+          "column": 0,
+          "index": 0,
+          "line": 0
         },
         "start": {
-          "column": 18,
-          "index": 35,
-          "line": 1
+          "column": 0,
+          "index": 0,
+          "line": 0
         }
       }
     },
@@ -35,31 +50,16 @@
       "selection": {
         "end": {
           "column": 0,
-          "index": 360,
-          "line": 10
+          "index": 481,
+          "line": 15
         },
         "start": {
           "column": 0,
-          "index": 360,
-          "line": 10
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Typo/TyposRunner.java",
-      "selection": {
-        "end": {
-          "column": 10,
-          "index": 2406,
-          "line": 67
-        },
-        "start": {
-          "column": 10,
-          "index": 2406,
-          "line": 67
+          "index": 481,
+          "line": 15
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/resources/Config.properties"
+  "selectedFile": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Myclass.java"
 }
