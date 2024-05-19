@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.*;
 import java.net.*;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.InetAddress;
@@ -22,6 +23,8 @@ import org.mainframe.Typo.Annotations.RequestType;
 import org.mainframe.Typo.Annotations.web.RequestMapping;
 import org.mainframe.Typo.Server.HttpServerV2;
 import org.mainframe.Typo.TyposRunner;
+import java.nio.*;
+
 
 public class HttpServerV2 {
     private HttpServer server;
@@ -29,8 +32,7 @@ public class HttpServerV2 {
     private Gson gson;
 //    private List<Class<?>> ClassesAnnotatedWithJSONCOMPONENT;
     private Map<Class<?>,Object> Classinstance;
-
-    private ExecutorService exeService;
+        private ExecutorService exeService;
     public HttpServerV2(Map<Class,List<Method>> map,int port){
         gson = new Gson();
         Classinstance = new HashMap<>();
@@ -56,6 +58,7 @@ public class HttpServerV2 {
                   server.createContext(annotation.value(),new RequestHolder(method,annotation.type()));
             });
          });
+            
          server.setExecutor(exeService);
          System.out.println("\n \n Available Routes");
          routes.forEach(rt->{
@@ -67,6 +70,9 @@ public class HttpServerV2 {
        }
     }
     
+    public  void setVal(Map<Class<?>,Object> val){
+        val.putAll(Classinstance);
+    }
     
     public String getRouteFromString(Method method){
         return method.isAnnotationPresent(RequestMapping.class) ?  ((String) method.getAnnotation(RequestMapping.class).value()):null;

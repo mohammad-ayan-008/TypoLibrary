@@ -11,6 +11,6 @@ import org.mainframe.Typo.TyposRunner;
 public class HttpServer {
     
     public static void main(String[] args) {
-       TyposRunner.run(HttpServer.class,8080);
+       TyposRunner.run(HttpServer.class);
     }
 }

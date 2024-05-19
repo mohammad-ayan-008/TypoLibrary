@@ -5,12 +5,14 @@ import org.mainframe.Typo.Annotations.RequestType;
 import org.mainframe.Typo.Annotations.web.*;
 import org.mainframe.Typo.Annotations.web.RequestMapping;
 import org.mainframe.Typo.Server.Enployee;
-
+import org.mainframe.Typo.JInjector.InjectVal;
 @Host
 public class Myclass {
 
     public  List<Enployee> data= new ArrayList<>();
 
+    @InjectVal("meta.project.name")
+    public static String name;
 
     @RequestMapping(value = "/api/vi",type=RequestType.GET)
     public List<Enployee> Test2(){
@@ -25,6 +27,7 @@ public class Myclass {
 
     @RequestMapping(value = "/api/post/data",type=RequestType.POST)
     public void Response(Enployee response){
+        System.out.println(name);
         data.add(response);
     }
 
