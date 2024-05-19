@@ -12,7 +12,7 @@ public class Myclass {
 //    public  List<Enployee> data= new ArrayList<>();
 //
 //    @InjectVal("meta.project.name")
-//    public static String name;
+//    public  String name;
 //
 //    @RequestMapping(value = "/api/vi",type=RequestType.GET)
 //    public List<Enployee> Test2(){

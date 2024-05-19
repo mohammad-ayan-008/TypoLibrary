@@ -4,14 +4,14 @@
       "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Myclass.java",
       "selection": {
         "end": {
-          "column": 30,
-          "index": 829,
-          "line": 24
+          "column": 2,
+          "index": 333,
+          "line": 8
         },
         "start": {
-          "column": 30,
-          "index": 829,
-          "line": 24
+          "column": 2,
+          "index": 333,
+          "line": 8
         }
       }
     },
@@ -19,14 +19,14 @@
       "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Typo/TyposRunner.java",
       "selection": {
         "end": {
-          "column": 39,
-          "index": 1146,
-          "line": 32
+          "column": 8,
+          "index": 2138,
+          "line": 56
         },
         "start": {
-          "column": 39,
-          "index": 1146,
-          "line": 32
+          "column": 8,
+          "index": 2138,
+          "line": 56
         }
       }
     },
@@ -74,7 +74,22 @@
           "line": 0
         }
       }
+    },
+    {
+      "file": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/resources/Config.properties",
+      "selection": {
+        "end": {
+          "column": 2,
+          "index": 2,
+          "line": 0
+        },
+        "start": {
+          "column": 2,
+          "index": 2,
+          "line": 0
+        }
+      }
     }
   ],
-  "selectedFile": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/Myclass.java"
+  "selectedFile": "/storage/emulated/0/TESTproj/HttpServerV2/app/src/main/java/org/mainframe/HttpServer.java"
 }

@@ -32,12 +32,13 @@ public class TyposRunner {
     private static Optional<String> value;
     private static HttpServerV2 server;
     public static void run(Class clss,int PORT) {
-         setValueFromXml(clss);
+         
          value = getAnnotationValue(clss);
          list = filterClassesWithAnnotations(clss);
          map=getAllAnnotatedMethods(list).get();
          server = new HttpServerV2(map,PORT);
          server.setVal(Classinstance);
+         setValueFromXml(clss);
         // server.setClassesAnnotatedWithJSONCOMPONENT(getAllClassesAnnotatedWithJSONCOMPONENT());
     }
 
