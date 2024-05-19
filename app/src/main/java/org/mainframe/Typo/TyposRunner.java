@@ -31,9 +31,7 @@ public class TyposRunner {
     private static Map<Class,List<Method>> map;
     private static Optional<String> value;
     private static HttpServerV2 server;
-    @InjectVal("server.port")
-    public static int PORT=8080;
-    public static void run(Class clss) {
+    public static void run(Class clss,int PORT) {
          setValueFromXml(clss);
          value = getAnnotationValue(clss);
          list = filterClassesWithAnnotations(clss);
@@ -83,8 +81,11 @@ public class TyposRunner {
                          if(x.getType()==int.class){
                              try {  
                                 x.setAccessible(true);          
-                               Object ins =  Classinstance.get(x.getDeclaringClass());        
-                               x.set(ins,Integer.parseInt((String)p.get(fetchValue(x))));   
+                                Object ins =  Classinstance.get(x.getDeclaringClass());   
+                                String val = (String)p.get(fetchValue(x));
+                                if(val !=null){        
+                                   x.set(ins,Integer.parseInt(val));  
+                                }            
                              }catch(Exception e){
                                  e.printStackTrace();
                              }
